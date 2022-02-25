@@ -20,11 +20,6 @@ def chart_select_view(request):
         product_df['product_id'] = product_df['id']
         purchase_df = pd.DataFrame(Purchase.objects.all().values())
         
-    except: 
-        purchase_df = None 
-        product_df = None
-
-    if purchase_df: 
         if purchase_df.shape[0]>0: 
             df = pd.merge(purchase_df,product_df,on= 'product_id').drop(['id_y','date_y'],axis= 1).rename({'id_x':'id','date_x':'date'},axis =1)
             price = df['price']
@@ -37,9 +32,6 @@ def chart_select_view(request):
                 chart_type = request.POST['sales']
                 date_from = request.POST['date_from']
                 date_to = request.POST['date_to']
-                print(chart_type)
-                # print(chart_type)
-                # print(date_from,date_to)
                 df['date'] = df['date'].apply(lambda x: x.strftime('%y-%m-%d'))
                 print(df['date'])
                 df2 = df.groupby('date',as_index = False)['total_price'].agg('sum')
@@ -54,8 +46,12 @@ def chart_select_view(request):
                 else: 
                     error_message = "please select a chart type to continue"
 
-    else: 
-        error_message = "no purchase records in the database"
+            else: 
+                error_message = "no purchase records in the database"
+
+    except: 
+        sucess_message = None
+        error_message = None
         
 
     context = {
@@ -82,6 +78,8 @@ def add_purchase_view(request):
 
         form = PurchaseForm()
         added_message = "The sale has been added"
+
+
     context ={
         'form': form,
         'added_message' : added_message

@@ -29,12 +29,12 @@ def get_simple_plot(chart_type,*args,**kwargs):
     data = kwargs.get('data')
  
 
-    if chart_type == "Bar Plot": 
+    if chart_type == "bar plot": 
         title = chart_type
         plt.title(title)
         plt.bar(x,y)
-        print("graph plot")
-    elif chart_type == "Line PLot": 
+        
+    elif chart_type == "line plot": 
         title = chart_type
         plt.title(title)
         plt.plot(x,y)
