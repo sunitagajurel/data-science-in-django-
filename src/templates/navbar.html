@@ -1,1 +1,26 @@
+{% url 'products:main-products-view' as path_to_performance %}
+{% url 'products:add-purchase-view' as path_to_adding_records %}
+{% url 'csvs:upload-view' as path_to_upload %}
+
+
 <h1> Navbar</h1>
+<div class="ui secondary pointing menu">
+    <a class="item">
+      Home
+    </a>
+    <a href ={{path_to_performance}} class="{% if request.path == path_to_performance %}active{% endif %}item">
+      Performance
+    </a>
+    <a href ={{path_to_adding_records}} class="{% if request.path == path_to_adding_records %}active{% endif %}item">
+      Add Records
+    </a>
+    <a href ={{path_to_upload}} class="{% if request.path == path_to_upload %}active{% endif %}item">
+        Upload File
+      </a>
+    <div class="right menu">
+      <a class="ui item">
+        Logout
+      </a>
+    </div>
+  </div>
+  

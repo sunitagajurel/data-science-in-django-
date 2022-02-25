@@ -70,7 +70,8 @@
   </form>
   <button class = "ui secondary button" id = 'modal-btn'>See Summary</button>
   <br> 
-  <button class = 'ui positive button'> Add records</button>
+  <a href = {% url 'products:add-purchase-view'%}><button class = 'ui positive button'> Add records</button> </a>
+  <a href = {% url 'products:export-csv-view'%}><button class = 'ui positive button'> export data</button> </a>
 </div>
 
 {% endblock content %} 
