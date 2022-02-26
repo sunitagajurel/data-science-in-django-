@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Login{% endblock title %}
+
+{% block content %}
+
+{% if error_message %}
+    <h1> {{error_message}}</h1>
+{% endif %}
+    <div class ="block-center"> 
+        <form action = "" method = "POST" class = 'ui form'>
+            {% csrf_token %}
+            {{form}}
+            <button type = "submit" class = "ui button positive"> Login </button>
+        </form>
+    </div>
+{% endblock content %}

@@ -2,13 +2,32 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Product,Purchase
 import pandas as pd 
-from .utils import get_simple_plot
+from .utils import get_simple_plot,get_salesman_from_id,get_image
 from .forms import PurchaseForm
 import csv 
 from django.http import HttpResponse 
+import matplotlib.pyplot as plt
+import seaborn as sns 
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
+@login_required
+def sales_dist_view(request):
+    df = pd.DataFrame(Purchase.objects.all().values())
+    df['salesman_id'] = df['salesman_id'].apply(get_salesman_from_id)
+    df.rename({'salesman_id':'salesman'},axis= 1,inplace =True)
+    df['date'] =df['date'].apply(lambda x:x.strftime('%Y-%m-%d'))
+    plt.switch_backend('Agg')
+    plt.xticks(rotation= 45)
+    sns.barplot(x='date',y='total_price',hue='salesman',data = df)
+    plt.tight_layout()
+    graph = get_image()
+
+    return render(request,'products/sales.html',{'graph':graph})
+
+@login_required
 def chart_select_view(request):
     graph = None
     error_message = None
@@ -66,9 +85,8 @@ def chart_select_view(request):
     return render(request, 'products/main.html',context)
 
 
-
+@login_required
 def add_purchase_view(request):
-    
     form = PurchaseForm(request.POST or None)
     added_message = None
     if form.is_valid(): 
@@ -78,7 +96,6 @@ def add_purchase_view(request):
 
         form = PurchaseForm()
         added_message = "The sale has been added"
-
 
     context ={
         'form': form,
@@ -97,6 +114,4 @@ def export_csv_view(request):
     writer.writerow(['product','quantity','price','total_price','salesman','date'])
     for purchase in Purchase.objects.all().values_list('product','quantity','price','total_price','salesman','date'):
         writer.writerow(purchase)
-
-
     return response

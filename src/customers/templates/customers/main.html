@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %} customer data{% endblock title %}
+
+{% block content %}
+<h1> Correlation: {{corr}} </h1>
+{% if graph %}
+   <img src = "data:image/png;base64,{{graph |safe }}">
+{% endif %}
+{% endblock content %}
