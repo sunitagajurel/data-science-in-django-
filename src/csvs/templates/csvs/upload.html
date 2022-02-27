@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} upload {% endblock title %}
+
+{% if sucess_message %}
+   <div class ="ui sucess message">
+       <i class ='close icon'> </i>
+        <div> 
+            {{sucess_message}}
+        </div>
+    </div>
+{% endif %} 
+
+{% if error_message %}
+   <div class ="ui error message">
+       <i class ='close icon'> </i>
+        <div> 
+            {{error_message}}
+        </div>
+    </div>
+{% endif %} 
+   
+
+
+
+{% block content %}
+    <h1> upload </h1>
+    <form action ="" method = "POST" enctype = "multipart/form-data" class = "ui form">
+        {% csrf_token %}
+        {{form}}
+    <button type = "submit" class = "ui positive button"> Add data</button>
+    </form>
+{% endblock content %}

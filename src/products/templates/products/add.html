@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% if added_message %}
+    </p> {{added_message}}
+{% endif %}
+<h1> 
+    Add
+</h1>
+<form action = " " method = "POST"  class="ui form"> 
+    {% csrf_token %}
+    {{form}}
+    <button type = "submit" class = 'ui positive button mtop'> Add sales data </button> 
+</form>
+
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "ui modal mymodal">
+  <div class = "header"> Price data</div>
+  <div class = "ui container"> 
+    <ul> 
+      <li> <strong> Count: {{price.count}}</strong> </li>
+      <li> <strong> Mean: {{price.mean}}</strong> </li>
+      <li> <strong> Median: {{price.median}}</strong> </li>
+      <li> <strong> Min: {{price.min}}</strong> </li>
+      <li> <strong> Max: {{price.max}}</strong> </li>
+      <li> <strong> Std: {{price.std}}</strong> </li>
+    
+    </ul>
+  </div>
+</div>
+{% if df %}
+   {{df}}
+{% endif %}
+<!-- {{price.mean |floatformat}} <br>
+{{price.std |floatformat }}<br> 
+{{price.median}} <br>  -->
+<hr>
+<div class = "block-centre"> 
+  {% if error_message %}
+    <div class="ui error message">
+      <i class="close icon"></i>
+      <div class="header">
+        {{error_message}}
+      </div>
+    
+    </div>
+  {% endif %}
+
+  {% if request.POST %}
+    {% if graph %}
+      <img src="data:image/png;base64, {{ graph | safe}}">
+    {% endif %}
+  {% endif %}
+  <form action = "" method = "POST" class="ui form">
+    {% csrf_token %}
+        <div class="field">
+            <label>Choose a chart Type</label>
+            <div class="ui selection dropdown">
+                <input type="hidden" name="sales">
+                <i class="dropdown icon"></i>
+                <div class="default text">-------</div>
+                <div class="menu">
+                    <div class="item" value="bar">Bar Plot</div>
+                    <div class="item" value="line">Line Plot</div>
+                    <div class="item" value="count">Count Plot</div>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="two fields">
+              <div class="field">
+                  <label> Date from:</label>
+                <input type="date" name="date_from">
+              </div>
+              <div class="field">
+                <label> Date to:</label>
+                <input type="date" name="date_to">
+              </div>
+            </div>
+          </div>
+          <button class = "ui primary button" type = 'submit'>Select</button>
+          
+  </form>
+  <button class = "ui secondary button" id = 'modal-btn'>See Summary</button>
+  <br> 
+  <a href = {% url 'products:add-purchase-view'%}><button class = 'ui positive button'> Add records</button> </a>
+  <a href = {% url 'products:export-csv-view'%}><button class = 'ui positive button'> export data</button> </a>
+</div>
+
+{% endblock content %} 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1> Sales</h1>
+ 
+    {% if graph %}
+    <div class ='block-centre'>
+        <img src = "data:image/png;base64,{{graph |safe }}">
+    </div>
+        
+    {% endif %}
+
+
+{% endblock content %}
