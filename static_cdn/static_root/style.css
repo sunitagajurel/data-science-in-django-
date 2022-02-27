@@ -11,6 +11,7 @@ ul li{
 .ui.button {
     width: 200px;
     border-radius:0px !important;
+    margin-top: 10px;
 }
 .block-centre {
     text-align : center !important;
