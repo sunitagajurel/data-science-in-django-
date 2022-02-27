@@ -24,9 +24,6 @@ def login_view(request):
             else: 
                 error_message ="Oops  Something went wrong !"
 
-            
-
-
     form = LoginForm()
     context = {
         'form':form,
