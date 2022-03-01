@@ -1,5 +1,6 @@
 # created by virtualenv automatically
 
-.Lib/
-.Scripts/
+Lib/*
+Scripts/*
+migrations/*
 
