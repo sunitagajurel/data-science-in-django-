@@ -1,14 +1,14 @@
 
 from django.shortcuts import render,redirect
 from .forms import LoginForm
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 
 def home_view(request):
     return render(request,'home.html',{})
 
 def login_view(request):
     error_message = None
-    form =LoginForm()
+    form = LoginForm()
     if request.method =='POST':
         form = LoginForm(data = request.POST)
         if form.is_valid():
@@ -30,3 +30,7 @@ def login_view(request):
         'error_message':error_message
             }
     return render(request,'login.html',context)
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')

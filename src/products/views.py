@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required
+@login_required(login_url ="login")
 def sales_dist_view(request):
     df = pd.DataFrame(Purchase.objects.all().values())
     df['salesman_id'] = df['salesman_id'].apply(get_salesman_from_id)
